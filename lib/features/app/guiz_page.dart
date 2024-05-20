@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
+import 'package:example_for_oua_ai/ai.dart';
 
 void main() {
   runApp(const QuizApp());
@@ -13,15 +14,22 @@ class QuizApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: QuizPage(),
     );
   }
 }
 
+// ignore: must_be_immutable
 class QuizPage extends StatefulWidget {
-  const QuizPage({super.key});
+  QuizPage({super.key});
+
+  String _input = "";
+
+  set input(String value) {
+    _input = value;
+  }
 
   @override
   // ignore: library_private_types_in_public_api
@@ -115,7 +123,7 @@ class _QuizPageState extends State<QuizPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'İkinci Dünya Savaşı ne zaman başladı?',  //Buraya ai tarafından gelen mesaj yazılacak....
+                      QuizPage()._input, //Buraya ai tarafından gelen mesaj yazılacak....
                       style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 20,
@@ -141,7 +149,7 @@ class _QuizPageState extends State<QuizPage> {
                         textColor: const Color.fromARGB(255, 1, 41, 3),
                         onTap: () {}),
 
-                        //Answer buttonlar ile aı botuna şıklar iletilecek.
+                    //Answer buttonlar ile aı botuna şıklar iletilecek.
                   ],
                 ),
               ),

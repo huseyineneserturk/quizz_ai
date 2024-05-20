@@ -1,3 +1,5 @@
+import 'package:example_for_oua_ai/ai.dart';
+import 'package:example_for_oua_ai/guiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,8 +26,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _QuizScreenState createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Controller'ı temizlemeyi unutmayın
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +93,7 @@ class QuizScreen extends StatelessWidget {
                       width: 400.0,
                       height: 150.0,
                       child: TextField(
+                        controller: myController,
                         maxLength: 350,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(15),
@@ -83,7 +101,7 @@ class QuizScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           hintText:
-                              'Quiz oluşturmak istediğin konuyla alakalı bir kaç kelime gir',  //Bu bölüme yazılan text bota yönlendirilecek.
+                              'Quiz oluşturmak istediğin konuyla alakalı bir kaç kelime gir', //Bu bölüme yazılan text bota yönlendirilecek.
                           hintStyle: GoogleFonts.poppins(
                             fontSize: 15.0,
                             fontWeight: FontWeight.normal,
@@ -145,7 +163,13 @@ class QuizScreen extends StatelessWidget {
                 const SizedBox(height: 30.0),
                 // Quiz Oluştur Butonu
                 ElevatedButton(
-                  onPressed: () {}, //Oluştur butonu istenen metni ve zorluk seviyesini aı bota iletececek.
+                  onPressed: () {
+                    AI().input = myController.text;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>  QuizPage()));
+                  }, //Oluştur butonu istenen metni ve zorluk seviyesini aı bota iletececek.
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 1.0),
